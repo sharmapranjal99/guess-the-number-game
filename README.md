@@ -6,7 +6,7 @@ The player has limited attempts to guess a randomly generated number between **1
 ---
 
 ## 🚀 Live Demo
-👉 https://your-username.github.io/your-repo-name/
+👉 https://sharmapranjal99.github.io/guess-the-number-game/
 
 ---
 
@@ -41,3 +41,8 @@ The player has limited attempts to guess a randomly generated number between **1
 ---
 
 ## 📂 Project Structure
+guess-the-number-game/
+│── index.html      # Main HTML file
+│── style.css       # Styling and layout
+│── script.js       # Game logic (JavaScript)
+│── README.md       # Project documentation
