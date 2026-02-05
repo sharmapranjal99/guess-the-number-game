@@ -9,16 +9,37 @@
 
 <div class="game-container">
     <h1>Guess The Number</h1>
-    <p>Guess a number between <b>1 to 100</b></p>
-    <p>Attempts Left: <span id="attempts">5</span></p>
+    <p>Guess a number between the given range</p>
+
+    <!-- Difficulty -->
+    <label><b>Difficulty:</b></label>
+    <select id="difficulty" onchange="setDifficulty()">
+        <option value="easy">🟢Easy (1–50 | 7 Attempts)</option>
+        <option value="medium" selected>🟡Medium (1–100 | 5 Attempts)</option>
+        <option value="hard">🔴Hard (1–200 | 3 Attempts)</option>
+    </select>
+
+    <p>
+         🏆Score: <span id="score">0</span> |
+         🔁Rounds: <span id="rounds">0</span>
+    </p>
+
+    <p>⏳Attempts Left: <span id="attempts">5</span></p>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div id="progressBar"></div>
+    </div>
 
     <input type="number" id="guessInput" placeholder="Enter your guess">
-    <button onclick="checkGuess()">Guess</button>
-
+    <button id="guessBtn" onclick="checkGuess()">Guess</button>
     <p id="message"></p>
 
     <button class="restart" onclick="restartGame()">Play Again</button>
 </div>
+
+<!-- One sound for all buttons -->
+<audio id="clickSound" src="click.mp3.wav"></audio>
 
 <script src="script.js"></script>
 </body>
