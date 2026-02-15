@@ -8,6 +8,25 @@ let attempts = maxAttempts;
 let score = 0;
 let rounds = 0;
 
+// 🔥 NEW FLAG
+let gameOver = false;
+
+// 🔥 Load saved score & rounds after refresh
+window.onload = function () {
+    let savedScore = localStorage.getItem("score");
+    let savedRounds = localStorage.getItem("rounds");
+
+    if (savedScore !== null) {
+        score = Number(savedScore);
+        document.getElementById("score").textContent = score;
+    }
+
+    if (savedRounds !== null) {
+        rounds = Number(savedRounds);
+        document.getElementById("rounds").textContent = rounds;
+    }
+};
+
 // Sound
 const clickSound = document.getElementById("clickSound");
 
@@ -38,6 +57,14 @@ function setDifficulty() {
 }
 
 function checkGuess() {
+
+    if (gameOver) {
+        const message = document.getElementById("message");
+        message.textContent = '⚠️ Click "Play Again" to start a new game!';
+        message.style.color = "black";
+        return;
+    }
+
     playSound();
 
     let guess = Number(document.getElementById("guessInput").value);
@@ -56,6 +83,7 @@ function checkGuess() {
 
     if (guess === randomNumber) {
         message.textContent = "🎉 Correct! You Won!";
+        message.style.color = "black";
         score++;
         rounds++;
         updateScore();
@@ -70,6 +98,7 @@ function checkGuess() {
 
     if (attempts === 0 && guess !== randomNumber) {
         message.textContent = "❌ Game Over! Number was " + randomNumber;
+        message.style.color = "black";
         rounds++;
         updateScore();
         endGame();
@@ -79,16 +108,22 @@ function checkGuess() {
 function updateScore() {
     document.getElementById("score").textContent = score;
     document.getElementById("rounds").textContent = rounds;
+
+    // 🔥 Save to localStorage
+    localStorage.setItem("score", score);
+    localStorage.setItem("rounds", rounds);
 }
 
 function endGame() {
-    document.getElementById("guessBtn").disabled = true;
+    gameOver = true;
     document.getElementById("guessInput").disabled = true;
     document.querySelector(".restart").style.display = "block";
 }
 
 function restartGame() {
     playSound();
+
+    gameOver = false;
 
     randomNumber = Math.floor(Math.random() * maxRange) + 1;
     attempts = maxAttempts;
@@ -98,19 +133,6 @@ function restartGame() {
     document.getElementById("message").textContent = "";
     document.getElementById("guessInput").value = "";
 
-    document.getElementById("guessBtn").disabled = false;
     document.getElementById("guessInput").disabled = false;
     document.querySelector(".restart").style.display = "none";
-}
-
-function toggleTheme() {
-    document.body.classList.toggle("dark");
-
-    const btn = document.getElementById("themeToggle");
-
-    if (document.body.classList.contains("dark")) {
-        btn.textContent = "☀️ Light Mode";
-    } else {
-        btn.textContent = "🌙 Dark Mode";
-    }
 }
